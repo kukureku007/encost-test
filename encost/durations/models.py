@@ -7,21 +7,26 @@ class Client(models.Model):
     class Meta:
         managed = False
         db_table = 'clients'
+    
+    def __str__(self):
+        return self.name
 
 
 class Equipment(models.Model):
     id = models.AutoField(primary_key=True)
-    client_id = models.ForeignKey(
+    client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
         related_name='equipments'
     )
-    client_id = ...
     name = models.TextField()
 
     class Meta:
         managed = False
         db_table = 'equipment'
+    
+    def __str__(self):
+        return self.name
 
 
 class Mode(models.Model):
@@ -31,23 +36,26 @@ class Mode(models.Model):
     class Meta:
         managed = False
         db_table = 'modes'
+    
+    def __str__(self):
+        return self.name
 
 
 class Duration(models.Model):
     id = models.AutoField(unique=True, primary_key=True)
-    client_id = models.ForeignKey(
+    client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
         related_name='durations'
     )
-    equipment_id = models.ForeignKey(
+    equipment = models.ForeignKey(
         Equipment,
         on_delete=models.CASCADE,
         related_name='durations'
     )
-    start = models.TextField()
-    stop = models.TextField()
-    mode_id = models.ForeignKey(
+    start = models.DateTimeField()
+    stop = models.DateTimeField()
+    mode = models.ForeignKey(
         Mode,
         on_delete=models.CASCADE,
         related_name='durations'
@@ -57,3 +65,9 @@ class Duration(models.Model):
     class Meta:
         managed = False
         db_table = 'durations'
+
+    def __str__(self):
+        return (
+            f'{self.id}: {self.client}, {self.equipment}, {self.start}, '
+            f'{self.stop}, {self.mode}, {self.minutes}.'
+        )
