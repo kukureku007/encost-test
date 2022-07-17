@@ -4,6 +4,7 @@ DS_Store
 .vscode/
 .vscode/*
 vscode/
+*.xlsm
 
 demo_db.db
 demo_db.sqlite3

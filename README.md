@@ -1,4 +1,4 @@
-1. Установка pip install -r requirements.txt
+1. Установка зависимостей из requirements.txt
 2. Базу положить в папку с файлом manage.py, переименовав название на 'demo_db.sqlite3'
 3. Запуск python3 manage.py migrate
 4. Запуск python3 manage.py runserver
