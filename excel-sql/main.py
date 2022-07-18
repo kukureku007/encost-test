@@ -38,6 +38,7 @@ def get_database_url():
 # sqlalchemy declaring endpoint_names table
 Base = declarative_base()
 
+
 class EndpointName(Base):
     __tablename__ = 'endpoint_names'
 
@@ -55,12 +56,14 @@ def get_row_from_excel(file_name: str):
         # check endpoint_name is not NaN or empty string, if so replace to None
         yield (
             endpoint_id,
-            None if (isinstance(endpoint_name, float)) and pandas.isna(endpoint_name) else endpoint_name
+            None if (
+                isinstance(endpoint_name, float) and pandas.isna(endpoint_name)
+            )
+            else endpoint_name
         )
 
 
 if __name__ == '__main__':
-    # '/Users/michaelrudy/Dev/encost-test/excel-sql/названия точек.xlsm'
     file_name = sys.argv[1]
 
     db_engine = create_engine(
@@ -72,8 +75,8 @@ if __name__ == '__main__':
     with Session(db_engine) as session:
         for row in get_row_from_excel(file_name):
             endpoint = EndpointName(
-                endpoint_id = row[0],
-                endpoint_name = row[1]
+                endpoint_id=row[0],
+                endpoint_name=row[1]
             )
             session.add(endpoint)
 
